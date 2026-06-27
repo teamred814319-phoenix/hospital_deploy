@@ -41,8 +41,6 @@ const sendEmail = async (
 
     });
 
-  await transporter.verify();
-
   await transporter.sendMail({
 
     from: user,
