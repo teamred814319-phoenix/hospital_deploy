@@ -1,5 +1,5 @@
 const API_BASE =
-    "http://localhost:5000/api";
+"https://phoenix-backend-xoxa.onrender.com/api";
 
 const token =
     localStorage.getItem("token");
