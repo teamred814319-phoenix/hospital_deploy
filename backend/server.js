@@ -23,7 +23,14 @@ const patientDocumentRoutes = require("./routes/patientDocumentRoutes");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://visionary-chaja-262ed3.netlify.app"
+    ],
+    credentials: true
+  })
+);
 app.use(express.json());
 app.use(
   "/uploads",
