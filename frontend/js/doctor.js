@@ -2,102 +2,448 @@
    DOCTOR REGISTER
 ========================== */
 
-const doctorRegisterForm =
-document.getElementById(
-"doctorRegisterForm"
-);
+const doctorRegisterForm = document.getElementById("doctorRegisterForm");
 
-// `setButtonLoading` is provided by config.js
+if (doctorRegisterForm) {
+    doctorRegisterForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-if(doctorRegisterForm){
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const doctorName = document.getElementById("doctorName").value.trim();
+        const specialization = document.getElementById("specialization").value.trim();
+        const experience = document.getElementById("experience").value;
+        const consultationFee = document.getElementById("consultationFee").value;
+        const hospitalName = document.getElementById("hospitalName").value.trim();
+        const medicalLicenseNumber = document.getElementById("medicalLicenseNumber").value.trim();
+        const aadhaarNumber = document.getElementById("aadhaarNumber").value.trim();
+        const availableDays = document.getElementById("availableDays").value.trim().split(",");
+        const availableTime = document.getElementById("availableTime").value.trim();
 
-doctorRegisterForm.addEventListener(
-"submit",
+        const registerButton = doctorRegisterForm.querySelector('button[type="submit"]');
 
-async(e)=>{
+        // Validation
+        if (!name || !email || !password || !doctorName || !specialization) {
+            showAlert("Please fill all required fields", "warning");
+            return;
+        }
+        if (!validateEmail(email)) {
+            showAlert("Please enter a valid email", "warning");
+            return;
+        }
+        if (!validatePassword(password)) {
+            showAlert("Password must be at least 6 characters", "warning");
+            return;
+        }
+        if (!validateAadhaar(aadhaarNumber)) {
+            showAlert("Aadhaar must be 12 digits", "warning");
+            return;
+        }
 
-    e.preventDefault();
+        setButtonLoading(registerButton, true, "Registering...");
 
-    const registerButton =
-        doctorRegisterForm.querySelector(
-            'button[type="submit"]'
-        );
+        try {
+            const data = await apiCall("/doctors/register", {
+                method: "POST",
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password,
+                    doctorName,
+                    specialization,
+                    experience: parseInt(experience),
+                    consultationFee: parseFloat(consultationFee),
+                    hospitalName,
+                    medicalLicenseNumber,
+                    aadhaarNumber,
+                    availableDays: availableDays.map(d => d.trim()),
+                    availableTime
+                })
+            });
 
-    setButtonLoading(
-        registerButton,
-        true,
-        "Registering..."
-    );
+            localStorage.setItem("doctorEmail", email);
+            showAlert("Registration successful! Proceeding to document upload.", "success");
+            setTimeout(() => {
+                window.location.href = "documents.html";
+            }, 1500);
+        } catch (error) {
+            showAlert(error.message || "Registration failed", "error");
+        } finally {
+            setButtonLoading(registerButton, false, "Register");
+        }
+    });
+}
+
+/* ==========================
+   DOCTOR DOCUMENT UPLOAD
+========================== */
+
+const uploadDoctorDocumentsBtn = document.getElementById("uploadDoctorDocumentsBtn");
+
+if (uploadDoctorDocumentsBtn) {
+    uploadDoctorDocumentsBtn.addEventListener("click", async () => {
+        const profilePhoto = document.getElementById("profilePhoto")?.files[0];
+        const aadhaarDocument = document.getElementById("aadhaarDocument")?.files[0];
+        const licenseDocument = document.getElementById("licenseDocument")?.files[0];
+        const degreeDocument = document.getElementById("degreeDocument")?.files[0];
+
+        if (!profilePhoto || !aadhaarDocument || !licenseDocument || !degreeDocument) {
+            showAlert("Please upload all required documents", "warning");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("profilePhoto", profilePhoto);
+        formData.append("aadhaarDocument", aadhaarDocument);
+        formData.append("licenseDocument", licenseDocument);
+        formData.append("degreeDocument", degreeDocument);
+
+        setButtonLoading(uploadDoctorDocumentsBtn, true, "Uploading documents...");
+
+        try {
+            const response = await fetch(`${API_BASE}/documents/upload`, {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Upload failed");
+            }
+
+            showAlert("Documents uploaded! Proceeding to OTP verification.", "success");
+            const doctorEmail = localStorage.getItem("doctorEmail");
+            localStorage.setItem("doctorEmail", doctorEmail);
+            setTimeout(() => {
+                window.location.href = "otp.html";
+            }, 1500);
+        } catch (error) {
+            showAlert(error.message || "Document upload failed", "error");
+        } finally {
+            setButtonLoading(uploadDoctorDocumentsBtn, false, "Upload Documents");
+        }
+    });
+}
+
+/* ==========================
+   DOCTOR OTP FLOW
+========================== */
+
+const doctorEmailOTP = document.getElementById("doctorEmail");
+const sendOtpBtn = document.getElementById("sendOtpBtn");
+const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+const otpInput = document.getElementById("otp");
+
+if (doctorEmailOTP) {
+    const doctorEmail = localStorage.getItem("doctorEmail");
+    if (doctorEmail) {
+        doctorEmailOTP.value = doctorEmail;
+    } else {
+        doctorEmailOTP.value = "No email stored";
+    }
+}
+
+if (sendOtpBtn) {
+    sendOtpBtn.addEventListener("click", async () => {
+        const email = doctorEmailOTP.value;
+
+        if (!email || email === "No email stored") {
+            showAlert("Please enter your email", "warning");
+            return;
+        }
+
+        setButtonLoading(sendOtpBtn, true, "Sending OTP...");
+
+        try {
+            const data = await apiCall("/otp/send", {
+                method: "POST",
+                body: JSON.stringify({ email })
+            });
+
+            showAlert("OTP sent to your email", "success");
+        } catch (error) {
+            showAlert(error.message || "Failed to send OTP", "error");
+        } finally {
+            setButtonLoading(sendOtpBtn, false, "Send OTP");
+        }
+    });
+}
+
+if (verifyOtpBtn) {
+    verifyOtpBtn.addEventListener("click", async () => {
+        const email = doctorEmailOTP.value;
+        const otp = otpInput.value.trim();
+
+        if (!otp) {
+            showAlert("Please enter OTP", "warning");
+            return;
+        }
+
+        setButtonLoading(verifyOtpBtn, true, "Verifying OTP...");
+
+        try {
+            const data = await apiCall("/otp/verify", {
+                method: "POST",
+                body: JSON.stringify({ email, otp })
+            });
+
+            showAlert("Email verified successfully! You can now login.", "success");
+            localStorage.removeItem("doctorEmail");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1500);
+        } catch (error) {
+            showAlert(error.message || "OTP verification failed", "error");
+        } finally {
+            setButtonLoading(verifyOtpBtn, false, "Verify OTP");
+        }
+    });
+}
+
+/* ==========================
+   DOCTOR LOGIN
+========================== */
+
+const doctorLoginForm = document.getElementById("doctorLoginForm");
+
+if (doctorLoginForm) {
+    doctorLoginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("doctorEmail").value.trim();
+        const password = document.getElementById("doctorPassword").value;
+        const submitBtn = doctorLoginForm.querySelector('button[type="submit"]');
+
+        if (!validateEmail(email)) {
+            showAlert("Please enter a valid email", "warning");
+            return;
+        }
+        if (!password) {
+            showAlert("Please enter password", "warning");
+            return;
+        }
+
+        setButtonLoading(submitBtn, true, "Logging in...");
+
+        try {
+            const data = await apiCall("/auth/login", {
+                method: "POST",
+                body: JSON.stringify({ email, password })
+            });
+
+            setAuthData(data.token, data.user);
+            showAlert("Login successful!", "success");
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 1000);
+        } catch (error) {
+            showAlert(error.message || "Login failed", "error");
+        } finally {
+            setButtonLoading(submitBtn, false, "Login");
+        }
+    });
+}
+
+/* ==========================
+   DOCTOR DASHBOARD - LOAD PROFILE
+========================== */
+
+async function loadDoctorProfile() {
+    const doctorPhotoEl = document.getElementById("doctorPhoto");
+    if (!doctorPhotoEl) return;
 
     try {
-        const response =
-            await fetch(
+        const data = await apiCall("/profile/doctor", { method: "GET" });
 
-            `${API_BASE}/doctors/register`,
+        document.getElementById("doctorName").innerText = data.doctorName || "N/A";
+        document.getElementById("doctorEmail").innerText = data.userId?.email || "N/A";
+        document.getElementById("doctorHospital").innerText = data.hospitalName || "N/A";
 
-            {
-                method:"POST",
+        const statusElement = document.getElementById("verificationStatus");
+        if (statusElement) {
+            statusElement.innerText = data.verificationStatus || "Pending";
+            statusElement.className = `${data.verificationStatus?.toLowerCase()}-status`;
+        }
 
-                headers:{
-                    "Content-Type":
-                        "application/json"
-                },
+        if (data.verificationStatus === "Rejected") {
+            showAlert("Your account has been rejected. Please contact admin.", "error");
+        }
 
-                body:JSON.stringify({
+        setImageSrc(doctorPhotoEl, data.profilePhoto, DEFAULT_DOCTOR_PHOTO);
 
-name:
-document.getElementById(
-"name"
-).value,
+        // Pre-fill form fields
+        document.getElementById("consultationFee").value = data.consultationFee || "";
+        document.getElementById("availableDays").value = (data.availableDays || []).join(", ");
+        document.getElementById("availableTime").value = data.availableTime || "";
+        document.getElementById("hospitalName").value = data.hospitalName || "";
+    } catch (error) {
+        console.error("Failed to load doctor profile:", error);
+        document.getElementById("doctorName").innerText = "Error loading profile";
+    }
+}
 
-email:
-document.getElementById(
-"email"
-).value,
+/* ==========================
+   LOAD DOCTOR APPOINTMENTS
+========================== */
 
-password:
-document.getElementById(
-"password"
-).value,
+async function loadDoctorAppointments() {
+    const doctorAppointments = document.getElementById("doctorAppointments");
+    if (!doctorAppointments) return;
 
-doctorName:
-document.getElementById(
-"doctorName"
-).value,
+    try {
+        const data = await apiCall("/doctor/appointments", { method: "GET" });
+        const appointments = Array.isArray(data) ? data : data.appointments || [];
 
-specialization:
-document.getElementById(
-"specialization"
-).value,
+        updateStats(appointments);
+        doctorAppointments.innerHTML = "";
 
-experience:
-document.getElementById(
-"experience"
-).value,
+        if (appointments.length === 0) {
+            doctorAppointments.innerHTML = "<p style='text-align: center; color: rgba(255,255,255,0.6);'>No appointments yet</p>";
+            return;
+        }
 
-consultationFee:
-document.getElementById(
-"consultationFee"
-).value,
+        appointments.forEach((appointment) => {
+            const patientPhoto = appointment.patientId?.profilePhoto
+                ? getFileUrl(appointment.patientId.profilePhoto)
+                : "../assets/default-user.png";
 
-hospitalName:
-document.getElementById(
-"hospitalName"
-).value,
+            const isActionable = appointment.status === "Pending";
 
-medicalLicenseNumber:
-document.getElementById(
-"medicalLicenseNumber"
-).value,
+            doctorAppointments.innerHTML += `
+                <div class="appointment-item">
+                    <img src="${patientPhoto}" class="doctor-small-photo" onerror="this.src='../assets/default-user.png'">
+                    <div style="flex: 1;">
+                        <p><strong>Patient:</strong> ${appointment.patientId?.name || "Unknown"}</p>
+                        <p><strong>Date:</strong> ${appointment.appointmentDate}</p>
+                        <p><strong>Time:</strong> ${appointment.appointmentTime}</p>
+                        <p><strong class="status-${appointment.status.toLowerCase()}">Status: ${appointment.status}</strong></p>
+                    </div>
+                    ${isActionable ? `
+                        <div style="display: flex; gap: 10px;">
+                            <button type="button" onclick="updateAppointmentStatus('${appointment._id}', 'Approved', this)" class="btn doctor-btn" style="width: 100px;">Approve</button>
+                            <button type="button" onclick="updateAppointmentStatus('${appointment._id}', 'Rejected', this)" class="btn patient-btn" style="width: 100px;">Reject</button>
+                        </div>
+                    ` : ""}
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Failed to load appointments:", error);
+        const doctorAppointments = document.getElementById("doctorAppointments");
+        if (doctorAppointments) {
+            doctorAppointments.innerHTML = "<p style='color: red;'>Error loading appointments</p>";
+        }
+    }
+}
 
-aadhaarNumber:
-document.getElementById(
-"aadhaarNumber"
-).value,
+function updateStats(appointments) {
+    let pending = 0;
+    let approved = 0;
 
-availableDays:
-document.getElementById(
-"availableDays"
+    appointments.forEach((appointment) => {
+        if (appointment.status === "Pending") pending++;
+        if (appointment.status === "Approved") approved++;
+    });
+
+    const pendingEl = document.getElementById("pendingCount");
+    const approvedEl = document.getElementById("approvedCount");
+
+    if (pendingEl) pendingEl.innerText = pending;
+    if (approvedEl) approvedEl.innerText = approved;
+}
+
+/* ==========================
+   UPDATE APPOINTMENT STATUS
+========================== */
+
+async function updateAppointmentStatus(appointmentId, status, button) {
+    if (button) setButtonLoading(button, true, `${status}ing...`);
+
+    try {
+        const data = await apiCall(`/doctor/appointment/${appointmentId}`, {
+            method: "PUT",
+            body: JSON.stringify({ status })
+        });
+
+        showAlert(`Appointment ${status.toLowerCase()}!`, "success");
+        await loadDoctorAppointments();
+    } catch (error) {
+        showAlert(error.message || "Failed to update appointment", "error");
+    } finally {
+        if (button) setButtonLoading(button, false, status);
+    }
+}
+
+/* ==========================
+   UPDATE DOCTOR PROFILE
+========================== */
+
+const updateProfileBtn = document.getElementById("updateProfileBtn");
+
+if (updateProfileBtn) {
+    updateProfileBtn.addEventListener("click", async () => {
+        const consultationFee = document.getElementById("consultationFee").value;
+        const availableDays = document.getElementById("availableDays").value.split(",").map(d => d.trim());
+        const availableTime = document.getElementById("availableTime").value;
+        const hospitalName = document.getElementById("hospitalName").value;
+
+        if (!consultationFee || !availableTime || !hospitalName) {
+            showAlert("Please fill all fields", "warning");
+            return;
+        }
+
+        setButtonLoading(updateProfileBtn, true, "Updating...");
+
+        try {
+            const data = await apiCall("/profile/doctor", {
+                method: "PUT",
+                body: JSON.stringify({
+                    consultationFee: parseFloat(consultationFee),
+                    availableDays,
+                    availableTime,
+                    hospitalName
+                })
+            });
+
+            showAlert("Profile updated successfully!", "success");
+        } catch (error) {
+            showAlert(error.message || "Update failed", "error");
+        } finally {
+            setButtonLoading(updateProfileBtn, false, "Update Profile");
+        }
+    });
+}
+
+/* ==========================
+   DOCTOR LOGOUT
+========================== */
+
+const doctorLogoutBtn = document.getElementById("doctorLogoutBtn");
+
+if (doctorLogoutBtn) {
+    doctorLogoutBtn.addEventListener("click", () => {
+        if (confirm("Are you sure you want to logout?")) {
+            clearAuthData();
+            window.location.href = "../index.html";
+        }
+    });
+}
+
+/* ==========================
+   AUTO LOAD
+========================== */
+
+if (document.getElementById("doctorPhoto")) {
+    loadDoctorProfile();
+    loadDoctorAppointments();
+
+    // Refresh every 30 seconds
+    setInterval(() => {
+        loadDoctorAppointments();
+    }, 30000);
+}
 ).value.split(","),
 
 availableTime:

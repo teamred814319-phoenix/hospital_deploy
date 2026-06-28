@@ -44,83 +44,86 @@
 
         <div class="dashboard-card stat-blue">
 
-    <h2>
-        Doctor Profile
-    </h2>
+            <h2>
+                Doctor Profile
+            </h2>
 
-    <br>
+            <br>
 
-    <img
-        id="doctorPhoto"
-        src="../assets/default-doctor.png"
-        class="profile-image">
+            <img
+                id="doctorPhoto"
+                src="../assets/default-doctor.png"
+                class="profile-image">
 
-    <br><br>
+            <br><br>
 
-    <h3 id="doctorName">
-        Loading...
-    </h3>
-
-    <p id="doctorEmail">
-        Loading...
-    </p>
-
-    <p id="doctorHospital">
-        Loading...
-    </p>
-
-    <br>
-
-    <div class="verification-box">
-
-        Status :
-
-        <span id="verificationStatus">
-
-            Loading...
-
-        </span>
-
-    </div>
-
-</div>
-<div class="dashboard-card">
-
-    <h2>
-        Appointment Statistics
-    </h2>
-
-    <br>
-
-    <div class="stats-grid">
-
-        <div class="stat-box">
-
-            <h3>
-                Pending
+            <h3 id="doctorName">
+                Loading...
             </h3>
 
-            <h1 id="pendingCount">
-                0
-            </h1>
+            <p id="doctorEmail">
+                Loading...
+            </p>
+
+            <p id="doctorHospital">
+                Loading...
+            </p>
+
+            <br>
+
+            <div class="verification-box">
+
+                <strong>Verification Status:</strong>
+
+                <span id="verificationStatus">
+
+                    Loading...
+
+                </span>
+
+            </div>
 
         </div>
 
-        <div class="stat-box">
+        <!-- APPOINTMENT STATISTICS -->
 
-            <h3>
-                Approved
-            </h3>
+        <div class="dashboard-card">
 
-            <h1 id="approvedCount">
-                0
-            </h1>
+            <h2>
+                Appointment Statistics
+            </h2>
+
+            <br>
+
+            <div class="stats-grid">
+
+                <div class="stat-box">
+
+                    <h3>
+                        Pending
+                    </h3>
+
+                    <h1 id="pendingCount">
+                        0
+                    </h1>
+
+                </div>
+
+                <div class="stat-box">
+
+                    <h3>
+                        Approved
+                    </h3>
+
+                    <h1 id="approvedCount">
+                        0
+                    </h1>
+
+                </div>
+
+            </div>
 
         </div>
-
-    </div>
-
-</div>
 
         <!-- APPOINTMENTS -->
 
@@ -133,60 +136,71 @@
             <br>
 
             <div id="doctorAppointments">
-
+                Loading appointments...
             </div>
 
         </div>
+
+        <!-- UPDATE PROFILE -->
+
         <div class="dashboard-card">
 
-    <h2>
-        Update Profile
-    </h2>
+            <h2>
+                Update Profile
+            </h2>
 
-    <br>
+            <br>
 
-    <input
-        type="number"
-        id="consultationFee"
-        class="glass-input"
-        placeholder="Consultation Fee">
+            <label class="upload-label">Consultation Fee (₹)</label>
 
-    <br><br>
+            <input
+                type="number"
+                id="consultationFee"
+                class="glass-input"
+                placeholder="500">
 
-    <input
-        type="text"
-        id="availableDays"
-        class="glass-input"
-        placeholder="Monday,Wednesday,Friday">
+            <br>
 
-    <br><br>
+            <label class="upload-label">Available Days</label>
 
-    <input
-        type="text"
-        id="availableTime"
-        class="glass-input"
-        placeholder="10 AM - 4 PM">
+            <input
+                type="text"
+                id="availableDays"
+                class="glass-input"
+                placeholder="Monday, Wednesday, Friday">
 
-    <br><br>
+            <br>
 
-    <input
-        type="text"
-        id="hospitalName"
-        class="glass-input"
-        placeholder="Hospital Name">
+            <label class="upload-label">Available Time</label>
 
-    <br><br>
+            <input
+                type="text"
+                id="availableTime"
+                class="glass-input"
+                placeholder="10 AM - 4 PM">
 
-    <button
-        type="button"
-        id="updateProfileBtn"
-        class="btn doctor-btn">
+            <br>
 
-        Update Profile
+            <label class="upload-label">Hospital Name</label>
 
-    </button>
+            <input
+                type="text"
+                id="hospitalName"
+                class="glass-input"
+                placeholder="General Hospital">
 
-</div>
+            <br><br>
+
+            <button
+                type="button"
+                id="updateProfileBtn"
+                class="btn doctor-btn">
+
+                Update Profile
+
+            </button>
+
+        </div>
 
     </div>
 

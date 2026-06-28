@@ -9,7 +9,7 @@
 content="width=device-width, initial-scale=1.0">
 
 <title>
-Doctor OTP Verification
+Doctor OTP Verification - PHOENIX
 </title>
 
 <link rel="stylesheet"
@@ -19,26 +19,37 @@ href="../css/style.css">
 
 <body>
 
+<div class="orb orb-pink"></div>
+<div class="orb orb-blue"></div>
+<div class="orb orb-green"></div>
+
 <div class="landing-container">
 
 <div class="glass-card form-card">
 
-<h2>
+<h1 class="logo small-logo">
+PHOENIX
+</h1>
 
+<p class="subtitle">
 Email Verification
-
-</h2>
+</p>
 
 <br>
+
+<p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+We've sent a verification code to your registered email. Please enter it below to complete your registration.
+</p>
 
 <input
   type="email"
   id="doctorEmail"
   class="glass-input"
-  placeholder="Email Address"
-  readonly>
+  placeholder="Your Email"
+  readonly
+  style="opacity: 0.7; margin-bottom: 20px;">
 
-<br><br>
+<br>
 
 <button
 type="button"
@@ -55,7 +66,10 @@ Send OTP
 type="text"
 id="otp"
 class="glass-input"
-placeholder="Enter OTP">
+placeholder="Enter 6-digit OTP"
+maxlength="6"
+pattern="[0-9]{6}"
+required>
 
 <br><br>
 
@@ -67,6 +81,15 @@ class="btn doctor-btn">
 Verify OTP
 
 </button>
+
+<br><br>
+
+<p style="color: rgba(255,255,255,0.6);">
+Haven't received the OTP? Check your spam folder or
+<a href="#" onclick="document.getElementById('sendOtpBtn').click(); return false;">
+click here to resend
+</a>
+</p>
 
 </div>
 

@@ -28,7 +28,7 @@
         <div class="dashboard-header">
 
             <h1>
-                PHOENIX
+                Patient Dashboard
             </h1>
 
             <button
@@ -42,91 +42,101 @@
 
         </div>
 
-        <!-- PROFILE -->
-
         <!-- PROFILE CARD -->
 
-<div class="dashboard-card stat-pink">
+        <div class="dashboard-card stat-pink">
 
-    <h2>
-        Patient Profile
-    </h2>
+            <h2>
+                My Profile
+            </h2>
 
-    <br>
+            <br>
 
-    <img
-        id="patientPhoto"
-        src="../assets/default-user.png"
-        class="profile-photo">
+            <img
+                id="patientPhoto"
+                src="../assets/default-user.png"
+                class="profile-photo">
 
-    <br><br>
+            <br><br>
 
-    <h3 id="patientName">
-        Loading...
-    </h3>
+            <h3 id="patientName">
+                Loading...
+            </h3>
 
-    <p id="patientEmail">
-        Loading...
-    </p>
+            <p id="patientEmail">
+                Loading...
+            </p>
 
-    <br>
+            <br>
 
-    <div class="stats-box">
+            <div class="stats-box">
 
-        <h3>
-            Total Appointments
-        </h3>
+                <h3>
+                    Total Appointments
+                </h3>
 
-        <p id="totalAppointments">
-            0
-        </p>
+                <p id="totalAppointments">
+                    0
+                </p>
 
-    </div>
+            </div>
 
-</div>
-<!-- DOCUMENT UPLOAD -->
+        </div>
 
-<div class="dashboard-card">
+        <!-- DOCUMENT UPLOAD -->
 
-    <h2>
-        Upload Documents
-    </h2>
+        <div class="dashboard-card">
 
-    <br>
+            <h2>
+                Upload Documents
+            </h2>
 
-    <input
-        type="file"
-        id="profilePhotoFile"
-        class="glass-input">
+            <br>
 
-    <br><br>
+            <div class="upload-section">
+                <label class="upload-label">Profile Photo</label>
+                <input
+                    type="file"
+                    id="profilePhotoFile"
+                    class="glass-input"
+                    accept="image/*">
+            </div>
 
-    <input
-        type="file"
-        id="aadhaarFile"
-        class="glass-input">
+            <br>
 
-    <br><br>
+            <div class="upload-section">
+                <label class="upload-label">Aadhaar Document</label>
+                <input
+                    type="file"
+                    id="aadhaarFile"
+                    class="glass-input"
+                    accept="image/*,.pdf">
+            </div>
 
-    <button
-        type="button"
-        id="uploadDocumentsBtn"
-        class="btn patient-btn">
+            <br>
 
-        Upload Documents
+            <button
+                type="button"
+                id="uploadDocumentsBtn"
+                class="btn patient-btn">
 
-    </button>
-    <br><br>
+                Upload Documents
 
-<img
-id="aadhaarPreview"
-style="
-width:200px;
-display:none;
-border-radius:15px;
-">
+            </button>
+            
+            <br><br>
 
-</div>
+            <img
+                id="aadhaarPreview"
+                style="
+                width:200px;
+                display:none;
+                border-radius:15px;
+                border: 2px solid var(--phoenix-pink);
+                margin-top: 15px;
+                ">
+
+        </div>
 
         <!-- BOOK APPOINTMENT -->
 
@@ -138,26 +148,31 @@ border-radius:15px;
 
             <br>
 
+            <label class="upload-label">Select Doctor</label>
+
             <select
                 id="doctorSelect"
                 class="glass-input">
-
+                <option value="">Loading doctors...</option>
             </select>
 
-            <br><br>
+            <br>
+
+            <label class="upload-label">Appointment Date</label>
 
             <input
                 type="date"
                 id="appointmentDate"
                 class="glass-input">
 
-            <br><br>
+            <br>
+
+            <label class="upload-label">Appointment Time</label>
 
             <input
-                type="text"
+                type="time"
                 id="appointmentTime"
-                class="glass-input"
-                placeholder="10:30 AM">
+                class="glass-input">
 
             <br><br>
 
@@ -183,7 +198,7 @@ border-radius:15px;
             <br>
 
             <div id="appointmentsList">
-
+                Loading appointments...
             </div>
 
         </div>

@@ -14,6 +14,10 @@
 
 <body>
 
+<div class="orb orb-pink"></div>
+<div class="orb orb-blue"></div>
+<div class="orb orb-green"></div>
+
 <div class="dashboard-container">
 
     <div class="dashboard-header">
@@ -25,7 +29,7 @@
         <button
             type="button"
             id="adminLogoutBtn"
-            class="btn">
+            class="btn doctor-btn">
 
             Logout
 
@@ -37,57 +41,57 @@
 
     <div class="dashboard-grid">
 
-    <div class="dashboard-card stat-pink">
+        <div class="dashboard-card stat-pink">
 
-        <h3>Total Doctors</h3>
+            <h3>Total Doctors</h3>
 
-        <h1 id="totalDoctors">
-            0
-        </h1>
+            <h1 id="totalDoctors">
+                0
+            </h1>
+
+        </div>
+
+        <div class="dashboard-card stat-blue">
+
+            <h3>Total Patients</h3>
+
+            <h1 id="totalPatients">
+                0
+            </h1>
+
+        </div>
+
+        <div class="dashboard-card stat-green">
+
+            <h3>Total Appointments</h3>
+
+            <h1 id="totalAppointments">
+                0
+            </h1>
+
+        </div>
+
+        <div class="dashboard-card stat-pink">
+
+            <h3>Pending Doctors</h3>
+
+            <h1 id="pendingDoctors">
+                0
+            </h1>
+
+        </div>
+
+        <div class="dashboard-card stat-green">
+
+            <h3>Approved Doctors</h3>
+
+            <h1 id="approvedDoctors">
+                0
+            </h1>
+
+        </div>
 
     </div>
-
-    <div class="dashboard-card stat-blue">
-
-        <h3>Total Patients</h3>
-
-        <h1 id="totalPatients">
-            0
-        </h1>
-
-    </div>
-
-    <div class="dashboard-card stat-green">
-
-        <h3>Total Appointments</h3>
-
-        <h1 id="totalAppointments">
-            0
-        </h1>
-
-    </div>
-
-    <div class="dashboard-card stat-pink">
-
-        <h3>Pending Doctors</h3>
-
-        <h1 id="pendingDoctors">
-            0
-        </h1>
-
-    </div>
-
-    <div class="dashboard-card stat-green">
-
-        <h3>Approved Doctors</h3>
-
-        <h1 id="approvedDoctors">
-            0
-        </h1>
-
-    </div>
-
-</div>
 
     <!-- ADD DOCTOR -->
 
@@ -99,41 +103,51 @@
 
         <form id="doctorForm">
 
+            <label class="upload-label">Doctor Name</label>
+
             <input
                 type="text"
                 id="doctorName"
                 class="glass-input"
-                placeholder="Doctor Name"
+                placeholder="Enter doctor name"
                 required>
 
-            <br><br>
+            <br>
+
+            <label class="upload-label">Specialization</label>
 
             <input
                 type="text"
                 id="specialization"
                 class="glass-input"
-                placeholder="Specialization"
+                placeholder="e.g., Cardiology"
                 required>
 
-            <br><br>
+            <br>
+
+            <label class="upload-label">Experience (Years)</label>
 
             <input
                 type="number"
                 id="experience"
                 class="glass-input"
-                placeholder="Experience"
+                placeholder="0"
                 required>
 
-            <br><br>
+            <br>
+
+            <label class="upload-label">Consultation Fee (₹)</label>
 
             <input
                 type="number"
                 id="consultationFee"
                 class="glass-input"
-                placeholder="Consultation Fee"
+                placeholder="500"
                 required>
 
-            <br><br>
+            <br>
+
+            <label class="upload-label">Available Time</label>
 
             <input
                 type="text"
@@ -145,7 +159,7 @@
             <br><br>
 
             <button
-                class="btn"
+                class="btn doctor-btn"
                 type="submit">
 
                 Add Doctor
@@ -161,20 +175,23 @@
     <div class="dashboard-card">
 
         <h2>
-            Doctors
+            All Doctors
         </h2>
 
         <br>
-        <input
-type="text"
-id="doctorSearch"
-class="glass-input"
-placeholder="Search Doctor">
 
-<br><br>
+        <label class="upload-label">Search Doctors</label>
+
+        <input
+            type="text"
+            id="doctorSearch"
+            class="glass-input"
+            placeholder="Search by name, specialization, or hospital">
+
+        <br><br>
 
         <div id="doctorList">
-
+            Loading doctors...
         </div>
 
     </div>

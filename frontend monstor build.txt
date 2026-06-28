@@ -1,0 +1,817 @@
+You are now the Lead Senior Software Architect, Senior Frontend Engineer, Senior MERN Stack Engineer, Senior UI/UX Engineer, QA Automation Engineer and Full Stack Debugging Expert.
+
+This project is a complete Hospital Management System called PHOENIX.
+
+The backend is FULLY WORKING.
+
+DO NOT modify backend logic unless absolutely necessary.
+
+Backend APIs have already been tested successfully using Postman.
+
+Your ONLY responsibility is rebuilding and debugging the frontend until it becomes a complete production-quality Hospital Management Web Application.
+
+======================================================
+PROJECT STRUCTURE
+======================================================
+
+Backend
+--------
+Node.js
+Express
+MongoDB Atlas
+Mongoose
+JWT Authentication
+OTP Email Verification
+Cloudinary File Upload
+REST APIs
+
+Frontend
+---------
+HTML
+CSS
+JavaScript
+
+Pages
+
+Landing
+--------
+index.html
+
+Patient
+--------
+register.html
+login.html
+dashboard.html
+
+Doctor
+-------
+register.html
+otp.html
+login.html
+dashboard.html
+documents.html
+
+Admin
+-----
+login.html
+dashboard.html
+
+======================================================
+BACKEND APIs
+======================================================
+
+Authentication
+
+POST /api/auth/register
+POST /api/auth/login
+
+OTP
+
+POST /api/otp/send
+POST /api/otp/verify
+
+Doctor
+
+GET /api/doctors
+GET /api/doctors/:id
+POST /api/doctors
+PUT /api/doctors/:id
+DELETE /api/doctors/:id
+
+Doctor Dashboard
+
+GET /api/doctor/dashboard
+
+Appointments
+
+POST /api/appointments
+GET /api/appointments
+PUT /api/appointments/:id
+DELETE /api/appointments/:id
+
+Documents
+
+POST /api/documents/upload
+
+Patient Documents
+
+POST /api/patient-documents/upload
+
+Profile
+
+GET /api/profile/doctor
+GET /api/profile/patient
+
+PUT /api/profile/doctor
+
+Admin
+
+POST /api/admin/login
+
+GET /api/admin/doctors
+
+PUT /api/admin/doctors/:id/approve
+
+PUT /api/admin/doctors/:id/reject
+
+======================================================
+OBJECTIVE
+======================================================
+
+Completely inspect every frontend file.
+
+Never assume a feature works.
+
+Verify every page.
+
+Verify every button.
+
+Verify every API call.
+
+Verify every redirect.
+
+Verify every form.
+
+Verify every localStorage usage.
+
+Verify every JWT usage.
+
+Verify every fetch().
+
+Verify every image.
+
+Verify every Cloudinary image.
+
+Verify every uploaded document.
+
+Verify every dashboard.
+
+Verify every CRUD operation.
+
+Fix everything.
+
+======================================================
+PART 1
+COMPLETE PROJECT ANALYSIS
+======================================================
+
+Inspect every folder.
+
+Inspect every HTML page.
+
+Inspect every CSS.
+
+Inspect every JavaScript.
+
+Generate a dependency graph.
+
+Generate a page graph.
+
+Generate API usage graph.
+
+Generate navigation graph.
+
+Generate localStorage graph.
+
+Generate session graph.
+
+======================================================
+PART 2
+FULL PAGE FLOW
+======================================================
+
+For every page explain
+
+Purpose
+
+Who can access
+
+Authentication required
+
+Incoming pages
+
+Outgoing pages
+
+Buttons
+
+Forms
+
+Cards
+
+Tables
+
+Dropdowns
+
+Navigation
+
+Logout
+
+Data loaded
+
+API called
+
+Storage used
+
+Cloudinary images loaded
+
+Expected response
+
+Error handling
+
+Loading states
+
+Success states
+
+======================================================
+PART 3
+BUTTON ANALYSIS
+======================================================
+
+Inspect EVERY BUTTON.
+
+For EACH button explain
+
+Button name
+
+Page
+
+Current behavior
+
+Expected behavior
+
+API
+
+Method
+
+Payload
+
+Headers
+
+JWT required
+
+Redirect after success
+
+Error popup
+
+Loading animation
+
+Database update
+
+Dashboard refresh
+
+If button is broken
+
+Fix it.
+
+======================================================
+PART 4
+FORMS
+======================================================
+
+Inspect ALL forms.
+
+Patient Registration
+
+Doctor Registration
+
+Doctor OTP
+
+Patient Login
+
+Doctor Login
+
+Admin Login
+
+Appointment Form
+
+Profile Update
+
+Document Upload
+
+Patient Upload
+
+Doctor Upload
+
+For every form
+
+Required fields
+
+Validation
+
+Regex
+
+Error messages
+
+Success messages
+
+Disabled buttons
+
+Submit logic
+
+Reset logic
+
+======================================================
+PART 5
+API VERIFICATION
+======================================================
+
+Verify every fetch().
+
+Verify
+
+Correct URL
+
+Correct HTTP Method
+
+Headers
+
+JWT
+
+Authorization
+
+Body
+
+Content-Type
+
+Response parsing
+
+Error handling
+
+Loading state
+
+Retry
+
+Redirect
+
+======================================================
+PART 6
+LOCAL STORAGE
+======================================================
+
+Verify every stored key.
+
+Token
+
+Role
+
+User ID
+
+Doctor ID
+
+Patient ID
+
+Profile URL
+
+Cloudinary URL
+
+Email
+
+OTP
+
+Remove unused keys.
+
+======================================================
+PART 7
+LOGIN FLOW
+======================================================
+
+Landing
+
+↓
+
+Register
+
+↓
+
+OTP
+
+↓
+
+Login
+
+↓
+
+Dashboard
+
+↓
+
+Logout
+
+Verify every transition.
+
+======================================================
+PART 8
+PATIENT FLOW
+======================================================
+
+Landing
+
+↓
+
+Register
+
+↓
+
+Login
+
+↓
+
+Dashboard
+
+↓
+
+Profile
+
+↓
+
+Upload Aadhaar
+
+↓
+
+Book Appointment
+
+↓
+
+View Appointment
+
+↓
+
+Cancel Appointment
+
+↓
+
+Logout
+
+Verify everything.
+
+======================================================
+PART 9
+DOCTOR FLOW
+======================================================
+
+Register
+
+↓
+
+Upload Documents
+
+↓
+
+Email OTP
+
+↓
+
+Login
+
+↓
+
+Dashboard
+
+↓
+
+View Patients
+
+↓
+
+Approve
+
+↓
+
+Reject
+
+↓
+
+Update Profile
+
+↓
+
+Logout
+
+Verify every transition.
+
+======================================================
+PART 10
+ADMIN FLOW
+======================================================
+
+Login
+
+↓
+
+Dashboard
+
+↓
+
+Pending Doctors
+
+↓
+
+Approve
+
+↓
+
+Reject
+
+↓
+
+View Statistics
+
+↓
+
+Logout
+
+Verify everything.
+
+======================================================
+PART 11
+DASHBOARDS
+======================================================
+
+Patient Dashboard
+
+Doctor Dashboard
+
+Admin Dashboard
+
+Verify
+
+Cards
+
+Counters
+
+Charts
+
+Appointments
+
+Status
+
+Images
+
+Cloudinary
+
+Tables
+
+Buttons
+
+Pagination
+
+======================================================
+PART 12
+DOCUMENT UPLOADS
+======================================================
+
+Verify
+
+Profile Photo
+
+Doctor Photo
+
+Patient Photo
+
+Aadhaar
+
+License
+
+Degree
+
+Cloudinary URL
+
+Preview
+
+Replace
+
+Delete
+
+Database update
+
+Dashboard update
+
+======================================================
+PART 13
+CLOUDINARY
+======================================================
+
+Verify every image.
+
+Never use local uploads.
+
+Always use
+
+doctor.profilePhoto
+
+patient.profilePhoto
+
+Cloudinary URL
+
+Broken image fallback
+
+Default avatar
+
+======================================================
+PART 14
+CRUD OPERATIONS
+======================================================
+
+Verify
+
+Create
+
+Read
+
+Update
+
+Delete
+
+For
+
+Doctor
+
+Patient
+
+Appointment
+
+Profile
+
+Documents
+
+======================================================
+PART 15
+STATUS SYSTEM
+======================================================
+
+Verify
+
+Pending
+
+Approved
+
+Rejected
+
+Cancelled
+
+Completed
+
+Booked
+
+Displayed correctly.
+
+======================================================
+PART 16
+LOADING STATES
+======================================================
+
+Every API must have
+
+Loading Spinner
+
+Disabled Buttons
+
+Progress
+
+Skeleton
+
+Success Toast
+
+Error Toast
+
+======================================================
+PART 17
+BUG DETECTION
+======================================================
+
+Automatically detect
+
+Broken buttons
+
+Broken redirects
+
+Wrong API URLs
+
+Wrong fetch()
+
+Wrong token
+
+Missing JWT
+
+Missing headers
+
+Broken Cloudinary
+
+Broken images
+
+Duplicate listeners
+
+Race conditions
+
+Null references
+
+Console errors
+
+404
+
+500
+
+CORS
+
+Undefined
+
+======================================================
+PART 18
+UI IMPROVEMENTS
+======================================================
+
+Improve
+
+Animations
+
+Transitions
+
+Cards
+
+Glassmorphism
+
+Premium Theme
+
+Responsive Design
+
+Loading Effects
+
+Hover Effects
+
+Professional Dashboard
+
+======================================================
+PART 19
+CODE QUALITY
+======================================================
+
+Remove
+
+Duplicate JS
+
+Dead code
+
+Unused variables
+
+Repeated fetch()
+
+Repeated event listeners
+
+Inline styles
+
+======================================================
+PART 20
+FINAL RESULT
+======================================================
+
+The application should behave exactly like a production Hospital Management System.
+
+Every page should work.
+
+Every button should work.
+
+Every API should work.
+
+Every redirect should work.
+
+Every upload should work.
+
+Every Cloudinary image should display.
+
+Every dashboard should refresh automatically.
+
+No console errors.
+
+No broken navigation.
+
+No broken buttons.
+
+No placeholder functionality.
+
+No dummy actions.
+
+No incomplete features.
+
+Fix every issue completely before moving to the next one.
+
+Never skip a feature.
+
+At the end, generate:
+
+1. Complete frontend workflow.
+
+2. Complete page flow.
+
+3. Complete button matrix.
+
+4. Complete API integration matrix.
+
+5. Bug report.
+
+6. Fixed files list.
+
+7. Remaining improvements.
+
+Do not stop after fixing one bug.
+
+Continue until the entire frontend is fully functional, polished, production-ready, and perfectly synchronized with the existing backend.
