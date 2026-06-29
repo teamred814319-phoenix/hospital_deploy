@@ -5,7 +5,6 @@ const sendEmail = async (
   subject,
   message
 ) => {
-
   const host =
     process.env.EMAIL_HOST ||
     "smtp.gmail.com";
@@ -16,8 +15,8 @@ const sendEmail = async (
   const secure =
     process.env.EMAIL_SECURE ===
     "true";
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
+  const user = (process.env.EMAIL_USER || "").trim();
+  const pass = (process.env.EMAIL_PASS || "").replace(/\s+/g, "");
 
   if (!user || !pass) {
     throw new Error(
@@ -25,34 +24,25 @@ const sendEmail = async (
     );
   }
 
-  const transporter =
-    nodemailer.createTransport({
-
-      host,
-
-      port,
-
-      secure,
-
-      auth: {
-        user,
-        pass,
-      },
-
-    });
-
-  await transporter.sendMail({
-
-    from: user,
-
-    to: email,
-
-    subject,
-
-    text: message,
-
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure,
+    auth: {
+      user,
+      pass,
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
   });
 
+  await transporter.sendMail({
+    from: `PHOENIX Hospital <${user}>`,
+    to: email,
+    subject,
+    text: message,
+  });
 };
 
 module.exports = sendEmail;

@@ -73,16 +73,21 @@ const registerDoctor = async (req, res) => {
     await Otp.deleteMany({ email });
     await Otp.create({ email, otp });
 
-    sendEmail(
-      email,
-      "PHOENIX Email Verification",
-      `Your OTP is: ${otp}`
-    ).catch((emailError) => {
+    try {
+      await sendEmail(
+        email,
+        "PHOENIX Email Verification",
+        `Your OTP is: ${otp}`
+      );
+    } catch (emailError) {
       console.error(
         "OTP email send failed:",
         emailError.message
       );
-    });
+      return res.status(502).json({
+        message: "Doctor registration saved, but OTP email could not be delivered."
+      });
+    }
 
     res.status(201).json({
       message:

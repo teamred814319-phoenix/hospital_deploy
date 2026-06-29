@@ -1,5 +1,11 @@
+const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
+
+const ensureUploadDir = (dirPath) => {
+    fs.mkdirSync(dirPath, { recursive: true });
+    return dirPath;
+};
 
 const storage = multer.diskStorage({
 
@@ -8,22 +14,20 @@ const storage = multer.diskStorage({
         if (
             file.fieldname === "profilePhoto"
         ) {
-
-            cb(
-                null,
-                "uploads/patientProfile"
+            const uploadDir = ensureUploadDir(
+                path.join(__dirname, "..", "uploads", "patientProfile")
             );
+            cb(null, uploadDir);
 
         }
 
         else if (
             file.fieldname === "aadhaarDocument"
         ) {
-
-            cb(
-                null,
-                "uploads/patientAadhaar"
+            const uploadDir = ensureUploadDir(
+                path.join(__dirname, "..", "uploads", "patientAadhaar")
             );
+            cb(null, uploadDir);
 
         }
 

@@ -88,6 +88,8 @@ body {
 
     overflow-y: auto;
 
+    background-color: #030712;
+
     background:
     linear-gradient(
         135deg,
@@ -97,9 +99,44 @@ body {
         #05121d
     );
 
+    background-attachment: fixed;
+
     color: white;
 
     position: relative;
+
+    -webkit-font-smoothing: antialiased;
+
+    text-rendering: optimizeLegibility;
+
+    will-change: transform;
+
+}
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(circle at top left, rgba(255,79,163,0.16), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(77,125,255,0.18), transparent 35%);
+
+    pointer-events: none;
+
+}
+
+.glass-card,
+.dashboard-container {
+
+    transform: translateZ(0);
+
+    backface-visibility: hidden;
 
 }
 .dashboard-container{
@@ -308,6 +345,7 @@ body {
         );
 
     -webkit-background-clip: text;
+    background-clip: text;
 
     -webkit-text-fill-color: transparent;
 
@@ -914,6 +952,7 @@ select.glass-input option {
 .appointment-item .doctor-name {
     background: linear-gradient(90deg,var(--phoenix-blue),var(--phoenix-green));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -1144,6 +1183,7 @@ select.glass-input option {
         );
 
     -webkit-background-clip: text;
+    background-clip: text;
 
     -webkit-text-fill-color: transparent;
 }
